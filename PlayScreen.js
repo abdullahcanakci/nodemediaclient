@@ -1,52 +1,48 @@
-import React from 'react';
-import { Text, TextInput, View, Button, StatusBar } from 'react-native';
-import { NodePlayerView } from 'react-native-nodemediaclient';
+import React, {useRef, useEffect} from 'react';
+import {View, StatusBar} from 'react-native';
+import {NodePlayerView} from 'react-native-nodemediaclient';
 import ActionButton from 'react-native-action-button';
 
-class PlayScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Play',
-  };
+const PlayScreen = ({route, navigation}) => {
+  const vp = useRef(null);
 
-  render() {
-    console.log( this.props)
-    return (
-      <View style={{ flex: 1 }}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="#6a51ae"
-        />
-        <NodePlayerView
-          style={{ flex: 1, backgroundColor: '#333' }}
-          ref={(vp) => { this.vp = vp }}
-          inputUrl={this.props.route.params.playserver + this.props.route.params.stream}
-          scaleMode={"ScaleAspectFill"}
-          bufferTime={300}
-          maxBufferTime={1000}
-          autoplay={true}
-          onStatus={(code, msg) => {
-            console.log("onStatus=" + code + " msg=" + msg);
-          }}
-        />
+  useEffect(() => {
+    return () => {
+      vp.current.stop();
+    };
+  }, []);
 
-        <ActionButton
-          buttonColor="rgba(231,76,60,1)"
-          // position='left'
-          offsetY={32}
-          offsetX={16}
-          size={32}
-          hideShadow={true}
-          buttonText='x'
-          verticalOrientation='down'
-          onPress={() => { this.props.navigation.goBack() }}
-        />
-      </View>
-    );
-  }
+  return (
+    <View style={{flex: 1}}>
+      <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
+      <NodePlayerView
+        style={{flex: 1, backgroundColor: '#333'}}
+        ref={vp}
+        inputUrl={route.params.playserver + route.params.stream}
+        scaleMode={'ScaleAspectFill'}
+        bufferTime={300}
+        maxBufferTime={1000}
+        autoplay={true}
+        onStatus={(code, msg) => {
+          console.log('onStatus=' + code + ' msg=' + msg);
+        }}
+      />
 
-  componentWillUnmount() {
-    this.vp.stop();
-  }
-}
+      <ActionButton
+        buttonColor="rgba(231,76,60,1)"
+        // position='left'
+        offsetY={32}
+        offsetX={16}
+        size={32}
+        hideShadow={true}
+        buttonText="x"
+        verticalOrientation="down"
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
+    </View>
+  );
+};
 
 export default PlayScreen;
