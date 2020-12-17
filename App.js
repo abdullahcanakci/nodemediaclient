@@ -43,8 +43,8 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  const [playserver, setPlayServer] = useState('rtmp://31.206.154.113/live/');
-  const [pushserver, setPushServer] = useState('rtmp://31.206.154.113/live/');
+  const [playserver, setPlayServer] = useState('rtmp://188.34.159.86/live/');
+  const [pushserver, setPushServer] = useState('rtmp://188.34.159.86/live/');
   const [stream, setStream] = useState(
     `demo_${Math.floor(Math.random() * (999 - 100)) + 100}`,
   );
