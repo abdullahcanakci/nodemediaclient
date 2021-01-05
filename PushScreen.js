@@ -83,7 +83,7 @@ const PushScreen = ({route}) => {
           buttonColor="#e74c3c"
           title="Close"
           onPress={() => {
-            this.props.navigation.goBack();
+            props.navigation.goBack();
           }}>
           <Icon name="ios-power-outline" style={styles.actionButtonIcon} />
         </ActionButton.Item>
